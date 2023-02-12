@@ -21,11 +21,9 @@
 
 static const uint8_t LED_PIN = PB5;
 
-static const uint32_t FREQUENCY = 8000;
-
-static const uint32_t PERIOD_US = 1000000 / FREQUENCY;
-
 static std::vector<uint8_t> MOTOR_PINS = {PB_0};
+
+static const uint32_t FREQUENCY = 8000;
 
 static Stm32F405Dshot dshot;
 
@@ -72,7 +70,7 @@ static void run(const uint32_t usec)
 {
     static uint32_t prev;
 
-    if (usec-prev > PERIOD_US) {
+    if (usec-prev > 1000000/FREQUENCY) {
         prev = usec;
         dshot.write(&motorval);
     }
