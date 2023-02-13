@@ -19,7 +19,7 @@
 
 #include <vector>
 
-static std::vector<uint8_t> MOTOR_PINS = {PB7};
+static std::vector<uint8_t> MOTOR_PINS = {PC7 /*PB7*/};
 
 static const uint32_t FREQUENCY = 8000;
 
