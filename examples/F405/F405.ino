@@ -90,9 +90,23 @@ static void prompt(const uint32_t usec)
     }
 }
 
+static void blinkLed(const uint32_t usec)
+{
+    static uint32_t prev;
+
+    if (usec-prev > 500000) {
+        static bool on;
+        on = !on;
+        digitalWrite(LED_PIN, on);
+        prev = usec;
+    }
+}
+
 void setup(void)
 {
     Serial.begin(115200);
+
+    pinMode(LED_PIN, OUTPUT);
 
     dshot.begin(MOTOR_PINS);
 }
@@ -104,4 +118,6 @@ void loop(void)
     prompt(usec);
 
     run(usec);
+
+    blinkLed(usec);
 }
