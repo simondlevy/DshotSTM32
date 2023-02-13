@@ -136,6 +136,10 @@ class Stm32Dshot {
 
         void begin(const std::vector<uint8_t> & motorPins)
         {
+            for (auto pin : motorPins) {
+                pinMode(pin, OUTPUT);
+            }
+
             dmaInit(motorPins, 1000 * m_outputFreq);
 
             m_motorCount = motorPins.size();

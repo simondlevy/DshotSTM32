@@ -1,10 +1,9 @@
 # STM32-DSHOT
 
-This is a simple, header-only DSHOT protocol library for STM32
-microcontrollers.  Adapted from the driver code the driver code in
-[Betaflight](https://github.com/betaflight/betaflight).  Includes Arduino
+This is a simple, header-only Arduino library for library for DSHOT protocol
+on STM32 microcontrollers.  I adapted it from the driver code the driver code in
 [example](https://github.com/simondlevy/DshotSTM32/blob/main/examples/F405/F405.ino).
-Currently does not support DSHOT telemetry.
+It currently does not support DSHOT telemetry.
 
 ## Similar projects
 

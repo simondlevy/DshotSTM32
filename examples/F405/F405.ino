@@ -92,9 +92,6 @@ static void prompt(const uint32_t usec)
 
 void setup(void)
 {
-    // XXX for some reason we can't start motors if we remove this!
-    pinMode(LED_PIN, OUTPUT);
-
     Serial.begin(115200);
 
     dshot.begin(MOTOR_PINS);
