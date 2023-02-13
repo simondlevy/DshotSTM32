@@ -1,4 +1,9 @@
 /*
+   Spin a brushless motor using an STM32 F405 MCU.
+
+   NOTE: To get this working on the Adafruit Feather F405, use the
+   Generic F405RGTx part number in the Tools menu.
+
    This file is part of DshotSTM32.
 
    DshotSTM32 is free software: you can redistribute it and/or modify it under the
@@ -19,7 +24,7 @@
 
 #include <vector>
 
-static std::vector<uint8_t> MOTOR_PINS = {PC7 /*PB7*/};
+static std::vector<uint8_t> MOTOR_PINS = {PC7};
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -33,32 +38,10 @@ extern "C" void handleDmaIrq(uint8_t id)
 
 static float motorval;
 
-/*
-static void reboot(void)
-{
-    __enable_irq();
-    HAL_RCC_DeInit();
-    HAL_DeInit();
-    SysTick->CTRL = SysTick->LOAD = SysTick->VAL = 0;
-    __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH();
-
-    const uint32_t p = (*((uint32_t *) 0x1FFF0000));
-    __set_MSP( p );
-
-    void (*SysMemBootJump)(void);
-    SysMemBootJump = (void (*)(void)) (*((uint32_t *) 0x1FFF0004));
-    SysMemBootJump();
-
-    NVIC_SystemReset();
-}*/
-
-
 void serialEvent(void)
 {
     if (Serial.available()) {
-
         Serial.read();
-
         motorval = motorval == 0 ? 0.1 : 0;
     }
 }
