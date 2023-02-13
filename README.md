@@ -1,4 +1,4 @@
-# STM32-DSHOT
+# DshotSTM32
 
 This is a simple, header-only Arduino library for library for DSHOT protocol
 on STM32 microcontrollers.  I adapted it from the driver code the driver code in
