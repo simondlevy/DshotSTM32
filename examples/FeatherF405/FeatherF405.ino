@@ -19,9 +19,7 @@
 
 #include <vector>
 
-static const uint8_t LED_PIN = PB5;
-
-static std::vector<uint8_t> MOTOR_PINS = {PB_0};
+static std::vector<uint8_t> MOTOR_PINS = {PB7};
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -35,6 +33,7 @@ extern "C" void handleDmaIrq(uint8_t id)
 
 static float motorval;
 
+/*
 static void reboot(void)
 {
     __enable_irq();
@@ -51,16 +50,14 @@ static void reboot(void)
     SysMemBootJump();
 
     NVIC_SystemReset();
-}
+}*/
 
 
 void serialEvent(void)
 {
     if (Serial.available()) {
 
-        if (Serial.read() == 'R') {
-            reboot();
-        }
+        Serial.read();
 
         motorval = motorval == 0 ? 0.1 : 0;
     }
@@ -90,23 +87,9 @@ static void prompt(const uint32_t usec)
     }
 }
 
-static void blinkLed(const uint32_t usec)
-{
-    static uint32_t prev;
-
-    if (usec-prev > 500000) {
-        static bool on;
-        on = !on;
-        digitalWrite(LED_PIN, on);
-        prev = usec;
-    }
-}
-
 void setup(void)
 {
     Serial.begin(115200);
-
-    pinMode(LED_PIN, OUTPUT);
 
     dshot.begin(MOTOR_PINS);
 }
@@ -118,6 +101,4 @@ void loop(void)
     prompt(usec);
 
     run(usec);
-
-    blinkLed(usec);
 }
