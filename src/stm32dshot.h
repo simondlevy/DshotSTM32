@@ -45,17 +45,15 @@ class Stm32Dshot {
 
         typedef struct {
             commandState_e state;
-            uint32_t nextCommandCycleDelay;
-            uint32_t delayAfterCommandUs;
-            uint8_t repeats;
             uint8_t command[MAX_MOTORS];
         } commandControl_t;
 
         commandControl_t m_commandQueue[MAX_COMMANDS + 1];
-        uint8_t          m_commandQueueHead;
-        uint32_t         m_outputFreq;
-        uint8_t          m_commandQueueTail;
-        uint8_t          m_motorCount;
+        uint8_t m_commandQueueHead;
+        uint8_t m_commandQueueTail;
+
+        uint32_t m_outputFreq;
+        uint8_t m_motorCount;
 
         bool isLastCommand(void)
         {
