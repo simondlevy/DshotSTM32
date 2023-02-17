@@ -25,7 +25,7 @@ class Stm32F411Dshot : public Stm32F4Dshot {
        virtual void initPortsAndMotors(
                const std::vector<uint8_t> & motorPins) override
         {
-            initStream1(0);
+            initStream1();
 
             initMotor(motorPins, 0, 0); 
             initMotor(motorPins, 1, 0);
