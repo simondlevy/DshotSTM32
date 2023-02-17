@@ -24,7 +24,11 @@
 
 #include <vector>
 
-static std::vector<uint8_t> MOTOR_PINS = {PC7};
+
+// static const uint8_t PIN = PB3; // Diatone MambaF411 motor 1
+static const uint8_t PIN = PC7;    // Adafruit Feather STM32F405 Feather Express
+
+static std::vector<uint8_t> PINS = {PIN};
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -74,7 +78,7 @@ void setup(void)
 {
     Serial.begin(115200);
 
-    dshot.begin(MOTOR_PINS);
+    dshot.begin(PINS);
 }
 
 void loop(void)
