@@ -176,8 +176,6 @@ class Stm32F4Dshot : public Stm32Dshot {
 
         port_t m_ports[2];
 
-        uint8_t m_portCount = 2;
-
         motor_t m_motors[4];
 
         GPIO_TypeDef * m_gpios[96];
@@ -319,12 +317,15 @@ class Stm32F4Dshot : public Stm32Dshot {
             // Reinitialize pacer timer for output
             TIM1->ARR = outputARR;
 
-            initPortsAndMotors(motorPins);
+            initStream1();
+            initStream2();
+
+            initMotors(motorPins);
         }
 
         virtual void dmaUpdateComplete(void) override
         {
-            for (auto k=0; k<m_portCount; ++k) {
+            for (auto k=0; k<2; ++k) {
                 dmaCmd(&m_ports[k], ENABLE);
             }
 
@@ -333,7 +334,7 @@ class Stm32F4Dshot : public Stm32Dshot {
 
         virtual void dmaUpdateStart(void) override
         {
-            for (auto k=0; k<m_portCount; ++k) {
+            for (auto k=0; k<2; ++k) {
                 dmaUpdateStartMotorPort(&m_ports[k]);
             }
         }
@@ -433,14 +434,13 @@ class Stm32F4Dshot : public Stm32Dshot {
                     TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
         }
 
-        virtual void initPortsAndMotors(const std::vector<uint8_t> & motorPins) = 0;
+        virtual void initMotors(const std::vector<uint8_t> & motorPins) = 0;
 
     public:
 
-        Stm32F4Dshot(const uint8_t portCount, const protocol_t protocol)
+        Stm32F4Dshot(const protocol_t protocol)
             : Stm32Dshot(protocol)
         {
-            (void)portCount;
         }
 
         void handleDmaIrq(const uint8_t portIndex)

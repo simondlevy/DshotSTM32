@@ -22,12 +22,8 @@ class Stm32F405Dshot : public Stm32F4Dshot {
 
     protected:
 
-        virtual void initPortsAndMotors(
-                const std::vector<uint8_t> & motorPins) override
+        virtual void initMotors(const std::vector<uint8_t> & motorPins) override
         {
-            initStream1();
-            initStream2();
-
             initMotor(motorPins, 0, 0); 
             initMotor(motorPins, 1, 0);
             initMotor(motorPins, 2, 1);
@@ -37,7 +33,7 @@ class Stm32F405Dshot : public Stm32F4Dshot {
     public:
 
         Stm32F405Dshot(protocol_t protocol=DSHOT600)
-            : Stm32F4Dshot(2, protocol)
+            : Stm32F4Dshot(protocol)
         {
         }
 };
