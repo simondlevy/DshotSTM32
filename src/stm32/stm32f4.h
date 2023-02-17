@@ -350,15 +350,12 @@ class Stm32F4Dshot : public Stm32Dshot {
         {
         }
 
-        void initMotor(
-                const std::vector<uint8_t> & motorPins,
-                const uint8_t motorIndex,
-                const uint8_t portIndex)
+        void addMotor(const uint8_t pin, const uint8_t portIndex)
         {
-            const uint8_t motorPin = motorPins[motorIndex];
+            auto motorIndex = Stm32Dshot::addMotor(pin);
 
             // 0, 1, 2, 3, ...
-            const uint8_t pinIndex = motorPin & 0x0f;
+            const uint8_t pinIndex = pin & 0x0f;
 
             m_motors[motorIndex].middleBit = (1 << (pinIndex + 16));
 
@@ -378,7 +375,7 @@ class Stm32F4Dshot : public Stm32Dshot {
             const uint32_t speed = (config >> 2) & 0x03;
             const uint32_t pull  = (config >> 5) & 0x03;
 
-            GPIO_TypeDef * gpio = m_gpios[motorPin]; // XXX
+            GPIO_TypeDef * gpio = m_gpios[pin]; // XXX
 
             gpio->MODER  &= ~(GPIO_MODER_MODER0 << (pinIndex * 2));
             gpio->MODER |= (mode << (pinIndex * 2));
@@ -424,8 +421,7 @@ class Stm32F4Dshot : public Stm32Dshot {
                 uint32_t gpioModeOutput = (GPIO_MODE_OUT << (pinIndex * 2));
                 MODIFY_REG(gpio->MODER, gpioModeMask, gpioModeOutput);
             }
-
-        } // initMotor
+        }
 
         void handleDmaIrq(const uint8_t portIndex)
         {

@@ -28,8 +28,6 @@
 // static const uint8_t PIN = PB7;    // F411
 static const uint8_t PIN = PC7;  // F405 
 
-static std::vector<uint8_t> PINS = {PIN};
-
 static const uint32_t FREQUENCY = 8000;
 
 static Stm32F4Dshot dshot;
@@ -78,9 +76,9 @@ void setup(void)
 {
     Serial.begin(115200);
 
-    dshot.begin(PINS);
+    dshot.begin();
 
-    dshot.initMotor(PINS, 0, 0);
+    dshot.addMotor(PIN, 0);
 }
 
 void loop(void)

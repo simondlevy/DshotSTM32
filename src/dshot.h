@@ -128,17 +128,22 @@ class Stm32Dshot {
 
         virtual void dmaWriteMotor(uint8_t index, uint16_t packet) = 0;
 
+        uint8_t addMotor(const uint8_t pin)
+        {
+            pinMode(pin, OUTPUT);
+
+            auto motorCount = m_motorCount;
+
+            m_motorCount++;
+
+            return motorCount;
+        }
+
    public:
 
-        void begin(const std::vector<uint8_t> & motorPins)
+        void begin(void)
         {
-            for (auto pin : motorPins) {
-                pinMode(pin, OUTPUT);
-            }
-
             dmaInit(1000 * m_outputFreq);
-
-            m_motorCount = motorPins.size();
         }
 
         // interval [0,1]
