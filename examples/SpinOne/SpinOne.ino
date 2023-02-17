@@ -42,10 +42,31 @@ extern "C" void handleDmaIrq(uint8_t id)
 
 static float motorval;
 
+static void reboot(void)
+{
+    __enable_irq();
+    HAL_RCC_DeInit();
+    HAL_DeInit();
+    SysTick->CTRL = SysTick->LOAD = SysTick->VAL = 0;
+    __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH();
+
+    const uint32_t p = (*((uint32_t *) 0x1FFF0000));
+    __set_MSP( p );
+
+    void (*SysMemBootJump)(void);
+    SysMemBootJump = (void (*)(void)) (*((uint32_t *) 0x1FFF0004));
+    SysMemBootJump();
+
+    NVIC_SystemReset();
+}
+
+
 void serialEvent(void)
 {
     if (Serial.available()) {
-        Serial.read();
+        if (Serial.read() == 'R') {
+            reboot();
+        }
         motorval = motorval == 0 ? 0.1 : 0;
     }
 }
