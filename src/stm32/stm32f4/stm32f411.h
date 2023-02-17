@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "dshot/stm32f4.h"
+#include "stm32/stm32f4.h"
 
 class Stm32F411Dshot : public Stm32F4Dshot {
 

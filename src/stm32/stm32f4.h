@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include "stm32dshot.h"
+#include "dshot.h"
 
 #include <stm32f4xx.h>
 
