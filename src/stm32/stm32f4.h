@@ -176,7 +176,7 @@ class Stm32F4Dshot : public Stm32Dshot {
 
         port_t m_ports[2];
 
-        uint8_t m_portCount;
+        uint8_t m_portCount = 2;
 
         motor_t m_motors[4];
 
@@ -440,7 +440,7 @@ class Stm32F4Dshot : public Stm32Dshot {
         Stm32F4Dshot(const uint8_t portCount, const protocol_t protocol)
             : Stm32Dshot(protocol)
         {
-            m_portCount = portCount;
+            (void)portCount;
         }
 
         void handleDmaIrq(const uint8_t portIndex)
