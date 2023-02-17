@@ -25,7 +25,7 @@
 #include <vector>
 
 
-static const uint8_t PIN = PB3;    // F411
+static const uint8_t PIN = PB7;    // F411
 // static const uint8_t PIN = PC7;  // F405 
 
 static std::vector<uint8_t> PINS = {PIN};

@@ -22,10 +22,11 @@ class Stm32F405Dshot : public Stm32F4Dshot {
 
     protected:
 
-        virtual void initPortsAndMotors(const std::vector<uint8_t> & motorPins) override
+        virtual void initPortsAndMotors(
+                const std::vector<uint8_t> & motorPins) override
         {
-            initStream1(1);
-            initStream2(0);
+            initStream1(0);
+            initStream2(1);
 
             initMotor(motorPins, 0, 0); 
             initMotor(motorPins, 1, 0);
