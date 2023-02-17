@@ -17,6 +17,8 @@ I have used this library successfully with the following hardware:
 
 * [Adafruit STM32F405 Feather Express](https://learn.adafruit.com/adafruit-stm32f405-feather-express/) development board.
 
+* [Adafruit STM32F411 "Black Pill"](https://www.adafruit.com/product/4877) development board.
+
 For all F405 boards (including the Adafruit STM32F405 Feather Express) you should select
 the Generic F405RGTx part number in the Tools menu.
 

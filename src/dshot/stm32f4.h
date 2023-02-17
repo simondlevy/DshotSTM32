@@ -284,7 +284,7 @@ class Stm32F4Dshot : public Stm32Dshot {
                 const uint32_t outputFreq) override
         {
             RCC_APB2PeriphClockEnable(
-                    RCC_APB2LPENR_TIM1LPEN_Msk   |
+                    RCC_APB2LPENR_TIM1LPEN_Msk   /* |
                     RCC_APB2LPENR_USART1LPEN_Msk |
                     RCC_APB2LPENR_USART6LPEN_Msk |
                     RCC_APB2LPENR_ADC1LPEN_Msk   |
@@ -293,7 +293,7 @@ class Stm32F4Dshot : public Stm32Dshot {
                     RCC_APB2LPENR_SYSCFGLPEN_Msk |
                     RCC_APB2LPENR_TIM9LPEN_Msk   |
                     RCC_APB2LPENR_TIM10LPEN_Msk  |
-                    RCC_APB2LPENR_TIM11LPEN_Msk);
+                    RCC_APB2LPENR_TIM11LPEN_Msk*/);
 
             uint8_t k = 0;
             for (uint8_t port=0; port<4; port++) {
