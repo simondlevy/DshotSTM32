@@ -277,21 +277,9 @@ class Stm32F4Dshot : public Stm32Dshot {
 
         } // initPort
 
-        virtual void dmaInit(
-                const std::vector<uint8_t> & motorPins,
-                const uint32_t outputFreq) override
+        virtual void dmaInit(const uint32_t outputFreq) override
         {
-            RCC_APB2PeriphClockEnable(
-                    RCC_APB2LPENR_TIM1LPEN_Msk   /* |
-                    RCC_APB2LPENR_USART1LPEN_Msk |
-                    RCC_APB2LPENR_USART6LPEN_Msk |
-                    RCC_APB2LPENR_ADC1LPEN_Msk   |
-                    RCC_APB2LPENR_SDIOLPEN_Msk   |
-                    RCC_APB2LPENR_SPI1LPEN_Msk   |
-                    RCC_APB2LPENR_SYSCFGLPEN_Msk |
-                    RCC_APB2LPENR_TIM9LPEN_Msk   |
-                    RCC_APB2LPENR_TIM10LPEN_Msk  |
-                    RCC_APB2LPENR_TIM11LPEN_Msk*/);
+            RCC_APB2PeriphClockEnable(RCC_APB2LPENR_TIM1LPEN_Msk);
 
             uint8_t k = 0;
             for (uint8_t port=0; port<4; port++) {
@@ -319,8 +307,6 @@ class Stm32F4Dshot : public Stm32Dshot {
 
             initStream1();
             initStream2();
-
-            initMotors(motorPins);
         }
 
         virtual void dmaUpdateComplete(void) override
@@ -340,6 +326,29 @@ class Stm32F4Dshot : public Stm32Dshot {
         }
 
     protected:
+
+        void initStream1(void)
+        {
+            initPort(0, TIM_DMA_CC1, DMA2_Stream1, 6,  DMA2_Stream1_IRQn,
+                    &TIM1->CCR1, TIM_CCER_CC1E,
+                    TIM_CCMR1_OC1M, TIM_CCMR1_CC1S, TIM_CCER_CC1P,
+                    TIM_CCER_CC1NP, TIM_CR2_OIS1, 0, 0, 0, 0);
+        }
+
+        void initStream2(void)
+        {
+            initPort(1, TIM_DMA_CC2, DMA2_Stream2, 16, DMA2_Stream2_IRQn,
+                    &TIM1->CCR2, TIM_CCER_CC2E,
+                    TIM_CCMR1_OC2M, TIM_CCMR1_CC2S, TIM_CCER_CC2P,
+                    TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
+        }
+
+    public:
+
+        Stm32F4Dshot(const protocol_t protocol=DSHOT600)
+            : Stm32Dshot(protocol)
+        {
+        }
 
         void initMotor(
                 const std::vector<uint8_t> & motorPins,
@@ -417,31 +426,6 @@ class Stm32F4Dshot : public Stm32Dshot {
             }
 
         } // initMotor
-
-        void initStream1(void)
-        {
-            initPort(0, TIM_DMA_CC1, DMA2_Stream1, 6,  DMA2_Stream1_IRQn,
-                    &TIM1->CCR1, TIM_CCER_CC1E,
-                    TIM_CCMR1_OC1M, TIM_CCMR1_CC1S, TIM_CCER_CC1P,
-                    TIM_CCER_CC1NP, TIM_CR2_OIS1, 0, 0, 0, 0);
-        }
-
-        void initStream2(void)
-        {
-            initPort(1, TIM_DMA_CC2, DMA2_Stream2, 16, DMA2_Stream2_IRQn,
-                    &TIM1->CCR2, TIM_CCER_CC2E,
-                    TIM_CCMR1_OC2M, TIM_CCMR1_CC2S, TIM_CCER_CC2P,
-                    TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
-        }
-
-        virtual void initMotors(const std::vector<uint8_t> & motorPins) = 0;
-
-    public:
-
-        Stm32F4Dshot(const protocol_t protocol)
-            : Stm32Dshot(protocol)
-        {
-        }
 
         void handleDmaIrq(const uint8_t portIndex)
         {

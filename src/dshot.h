@@ -120,9 +120,7 @@ class Stm32Dshot {
                 300 : 600;
         }
 
-        virtual void dmaInit(
-                const std::vector<uint8_t> & motorPins,
-                const uint32_t dshotOutputFreq) = 0;
+        virtual void dmaInit(const uint32_t dshotOutputFreq) = 0;
 
         virtual void dmaUpdateComplete(void) = 0;
 
@@ -138,7 +136,7 @@ class Stm32Dshot {
                 pinMode(pin, OUTPUT);
             }
 
-            dmaInit(motorPins, 1000 * m_outputFreq);
+            dmaInit(1000 * m_outputFreq);
 
             m_motorCount = motorPins.size();
         }

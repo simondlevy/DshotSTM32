@@ -19,20 +19,20 @@
    DshotSTM32. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <stm32dshot.h>
-#include <dshot/stm32f4/stm32f405.h>
+#include <dshot.h>
+#include <stm32/stm32f4.h>
 
 #include <vector>
 
 
-static const uint8_t PIN = PB7;    // F411
-// static const uint8_t PIN = PC7;  // F405 
+// static const uint8_t PIN = PB7;    // F411
+static const uint8_t PIN = PC7;  // F405 
 
 static std::vector<uint8_t> PINS = {PIN};
 
 static const uint32_t FREQUENCY = 8000;
 
-static Stm32F405Dshot dshot;
+static Stm32F4Dshot dshot;
 
 // DSHOT timer interrupt
 extern "C" void handleDmaIrq(uint8_t id)
@@ -42,31 +42,10 @@ extern "C" void handleDmaIrq(uint8_t id)
 
 static float motorval;
 
-static void reboot(void)
-{
-    __enable_irq();
-    HAL_RCC_DeInit();
-    HAL_DeInit();
-    SysTick->CTRL = SysTick->LOAD = SysTick->VAL = 0;
-    __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH();
-
-    const uint32_t p = (*((uint32_t *) 0x1FFF0000));
-    __set_MSP( p );
-
-    void (*SysMemBootJump)(void);
-    SysMemBootJump = (void (*)(void)) (*((uint32_t *) 0x1FFF0004));
-    SysMemBootJump();
-
-    NVIC_SystemReset();
-}
-
-
 void serialEvent(void)
 {
     if (Serial.available()) {
-        if (Serial.read() == 'R') {
-            reboot();
-        }
+        Serial.read();
         motorval = motorval == 0 ? 0.1 : 0;
     }
 }
@@ -100,6 +79,8 @@ void setup(void)
     Serial.begin(115200);
 
     dshot.begin(PINS);
+
+    dshot.initMotor(PINS, 0, 0);
 }
 
 void loop(void)
