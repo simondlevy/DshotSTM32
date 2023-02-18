@@ -32,10 +32,15 @@ static const uint32_t FREQUENCY = 8000;
 
 static Stm32F4Dshot dshot;
 
-// DSHOT timer interrupt
-extern "C" void handleDmaIrq(uint8_t id)
+
+extern "C" void DMA2_Stream1_IRQHandler(void) 
 {
-    dshot.handleDmaIrq(id);
+    dshot.handleDmaIrq(0);
+}
+
+extern "C" void DMA2_Stream2_IRQHandler(void) 
+{
+    dshot.handleDmaIrq(1);
 }
 
 static float motorval;
