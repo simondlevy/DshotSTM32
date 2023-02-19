@@ -15,6 +15,8 @@ I have used this library successfully with the following hardware:
 
 * [Diatone Cube 229 Brushless Quadcopter](https://www.diatoneusa.com/store/p659/Diatone_Toothpick_Cube_229_8500_PNF.html)
 
+* [Darwin FPV BabyApe Quadcopter](https://www.getfpv.com/darwinfpv-baby-ape-pro-v2-3-quadcopter-w-caddx-ant.html)
+
 * [Adafruit STM32F405 Feather Express](https://learn.adafruit.com/adafruit-stm32f405-feather-express/) development board.
 
 * [Adafruit STM32F411 "Black Pill"](https://www.adafruit.com/product/4877) development board.
