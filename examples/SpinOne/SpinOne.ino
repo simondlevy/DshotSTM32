@@ -25,8 +25,8 @@
 #include <vector>
 
 
-// static const uint8_t PIN = PB7;    // F411
-static const uint8_t PIN = PC7;  // F405 
+static const uint8_t PIN = PB7;    // F411
+// static const uint8_t PIN = PC6;  // F405 
 
 static const uint32_t FREQUENCY = 8000;
 
