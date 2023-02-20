@@ -17,6 +17,8 @@ I have used this library successfully with the following hardware:
 
 * [Darwin FPV BabyApe Quadcopter](https://www.getfpv.com/darwinfpv-baby-ape-pro-v2-3-quadcopter-w-caddx-ant.html)
 
+* [MATEKSYS Flight Controller F405-HDTE](http://www.mateksys.com/?portfolio=f405-hdte)
+
 * [Adafruit STM32F405 Feather Express](https://learn.adafruit.com/adafruit-stm32f405-feather-express/) development board.
 
 * [Adafruit STM32F411 "Black Pill"](https://www.adafruit.com/product/4877) development board.
