@@ -25,8 +25,8 @@
 #include <vector>
 
 
-// static const uint8_t PIN = PB5;    // F411
-static const uint8_t PIN = PC6;  // F405 
+static const uint8_t PIN = PB5;    // F411
+//static const uint8_t PIN = PC6;  // F405 
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -83,7 +83,7 @@ void setup(void)
 
     dshot.begin();
 
-    dshot.addMotor(PIN, 0);
+    dshot.addMotorStream1(PIN);
 }
 
 void loop(void)

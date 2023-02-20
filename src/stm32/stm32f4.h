@@ -343,13 +343,6 @@ class Stm32F4Dshot : public Stm32Dshot {
             DMA2->LIFCR = (DMA_IT_TCIF << port->flagsShift);
         }
 
-    public:
-
-        Stm32F4Dshot(const protocol_t protocol=DSHOT600)
-            : Stm32Dshot(protocol)
-        {
-        }
-
         void addMotor(const uint8_t pin, const uint8_t portIndex)
         {
             auto motorIndex = Stm32Dshot::addMotor(pin);
@@ -421,6 +414,23 @@ class Stm32F4Dshot : public Stm32Dshot {
                 uint32_t gpioModeOutput = (GPIO_MODE_OUT << (pinIndex * 2));
                 MODIFY_REG(gpio->MODER, gpioModeMask, gpioModeOutput);
             }
+        }
+
+    public:
+
+        Stm32F4Dshot(const protocol_t protocol=DSHOT600)
+            : Stm32Dshot(protocol)
+        {
+        }
+
+        void addMotorStream1(const uint8_t pin)
+        {
+            addMotor(pin, 0);
+        }
+
+        void addMotorStream2(const uint8_t pin)
+        {
+            addMotor(pin, 1);
         }
 
         void handleDmaIrqStream1(void)
