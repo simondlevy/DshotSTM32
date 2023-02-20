@@ -275,7 +275,7 @@ class Stm32F4Dshot : public Stm32Dshot {
 
             *ccr = 0x00000000;
 
-        } // initPort
+        }
 
         virtual void dmaInit(const uint32_t outputFreq) override
         {
@@ -314,7 +314,7 @@ class Stm32F4Dshot : public Stm32Dshot {
                     &TIM1->CCR2, TIM_CCER_CC2E,
                     TIM_CCMR1_OC2M, TIM_CCMR1_CC2S, TIM_CCER_CC2P,
                     TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
-         }
+        }
 
         virtual void dmaUpdateComplete(void) override
         {
