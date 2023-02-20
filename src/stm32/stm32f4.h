@@ -305,9 +305,16 @@ class Stm32F4Dshot : public Stm32Dshot {
             // Reinitialize pacer timer for output
             TIM1->ARR = outputARR;
 
-            initStream1();
-            initStream2();
-        }
+            initPort(0, TIM_DMA_CC1, DMA2_Stream1, 6,  DMA2_Stream1_IRQn,
+                    &TIM1->CCR1, TIM_CCER_CC1E,
+                    TIM_CCMR1_OC1M, TIM_CCMR1_CC1S, TIM_CCER_CC1P,
+                    TIM_CCER_CC1NP, TIM_CR2_OIS1, 0, 0, 0, 0);
+
+            initPort(1, TIM_DMA_CC2, DMA2_Stream2, 16, DMA2_Stream2_IRQn,
+                    &TIM1->CCR2, TIM_CCER_CC2E,
+                    TIM_CCMR1_OC2M, TIM_CCMR1_CC2S, TIM_CCER_CC2P,
+                    TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
+         }
 
         virtual void dmaUpdateComplete(void) override
         {
@@ -323,24 +330,6 @@ class Stm32F4Dshot : public Stm32Dshot {
             for (auto k=0; k<2; ++k) {
                 dmaUpdateStartMotorPort(&m_ports[k]);
             }
-        }
-
-    protected:
-
-        void initStream1(void)
-        {
-            initPort(0, TIM_DMA_CC1, DMA2_Stream1, 6,  DMA2_Stream1_IRQn,
-                    &TIM1->CCR1, TIM_CCER_CC1E,
-                    TIM_CCMR1_OC1M, TIM_CCMR1_CC1S, TIM_CCER_CC1P,
-                    TIM_CCER_CC1NP, TIM_CR2_OIS1, 0, 0, 0, 0);
-        }
-
-        void initStream2(void)
-        {
-            initPort(1, TIM_DMA_CC2, DMA2_Stream2, 16, DMA2_Stream2_IRQn,
-                    &TIM1->CCR2, TIM_CCER_CC2E,
-                    TIM_CCMR1_OC2M, TIM_CCMR1_CC2S, TIM_CCER_CC2P,
-                    TIM_CCER_CC2NP, TIM_CR2_OIS2, 8, 4, 4, 4);
         }
 
     public:
