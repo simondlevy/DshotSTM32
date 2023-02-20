@@ -25,8 +25,8 @@
 #include <vector>
 
 
-static const uint8_t PIN = PB5;    // F411
-// static const uint8_t PIN = PC6;  // F405 
+// static const uint8_t PIN = PB5;    // F411
+static const uint8_t PIN = PC6;  // F405 
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -35,12 +35,12 @@ static Stm32F4Dshot dshot;
 
 extern "C" void DMA2_Stream1_IRQHandler(void) 
 {
-    dshot.handleDmaIrq(0);
+    dshot.handleDmaIrqStream1();
 }
 
 extern "C" void DMA2_Stream2_IRQHandler(void) 
 {
-    dshot.handleDmaIrq(1);
+    dshot.handleDmaIrqStream2();
 }
 
 static float motorval;

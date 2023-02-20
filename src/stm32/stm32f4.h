@@ -332,6 +332,17 @@ class Stm32F4Dshot : public Stm32Dshot {
             }
         }
 
+        void handleDmaIrq(const uint8_t portIndex)
+        {
+            port_t *port = &m_ports[portIndex];
+
+            dmaCmd(port, DISABLE);
+
+            timDmaCmd(port->dmaSource, DISABLE);
+
+            DMA2->LIFCR = (DMA_IT_TCIF << port->flagsShift);
+        }
+
     public:
 
         Stm32F4Dshot(const protocol_t protocol=DSHOT600)
@@ -412,14 +423,14 @@ class Stm32F4Dshot : public Stm32Dshot {
             }
         }
 
-        void handleDmaIrq(const uint8_t portIndex)
+        void handleDmaIrqStream1(void)
         {
-            port_t *port = &m_ports[portIndex];
-
-            dmaCmd(port, DISABLE);
-
-            timDmaCmd(port->dmaSource, DISABLE);
-
-            DMA2->LIFCR = (DMA_IT_TCIF << port->flagsShift);
+            handleDmaIrq(0);
         }
+
+        void handleDmaIrqStream2(void)
+        {
+            handleDmaIrq(1);
+        }
+
 };
