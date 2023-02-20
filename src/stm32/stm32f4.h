@@ -176,7 +176,7 @@ class Stm32F4Dshot : public Stm32Dshot {
 
         port_t m_ports[2];
 
-        motor_t m_motors[4];
+        motor_t m_motors[MAX_MOTORS];
 
         GPIO_TypeDef * m_gpios[96];
 

@@ -28,12 +28,15 @@ class Stm32Dshot {
             DSHOT600,
         } protocol_t;
 
+    protected:
+
+        static const uint8_t MAX_MOTORS = 10;
+
     private:
 
         static const uint16_t MIN_VALUE = 48;
         static const uint16_t MAX_VALUE = 2047;
 
-        static const uint8_t MAX_MOTORS   = 10;
         static const uint8_t MAX_COMMANDS = 3;
 
         typedef enum {
