@@ -423,14 +423,26 @@ class Stm32F4Dshot : public Stm32Dshot {
         {
         }
 
-        void addMotorStream1(const uint8_t pin)
+        void begin(std::vector<uint8_t> & stream1Pins)
         {
-            addMotor(pin, 0);
+            Stm32Dshot::begin();
+
+            for (auto pin : stream1Pins) {
+                addMotor(pin, 0);
+            }
         }
 
-        void addMotorStream2(const uint8_t pin)
+        void begin(std::vector<uint8_t> & stream1Pins, std::vector<uint8_t> & stream2Pins) 
         {
-            addMotor(pin, 1);
+            Stm32Dshot::begin();
+
+            for (auto pin : stream2Pins) {
+                addMotor(pin, 1);
+            }
+
+            for (auto pin : stream1Pins) {
+                addMotor(pin, 0);
+            }
         }
 
         void handleDmaIrqStream1(void)

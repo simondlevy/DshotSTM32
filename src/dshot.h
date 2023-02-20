@@ -123,13 +123,10 @@ class Stm32Dshot {
                 300 : 600;
         }
 
-        virtual void dmaInit(const uint32_t dshotOutputFreq) = 0;
-
-        virtual void dmaUpdateComplete(void) = 0;
-
-        virtual void dmaUpdateStart(void) = 0;
-
-        virtual void dmaWriteMotor(uint8_t index, uint16_t packet) = 0;
+        void begin(void)
+        {
+            dmaInit(1000 * m_outputFreq);
+        }
 
         uint8_t addMotor(const uint8_t pin)
         {
@@ -142,12 +139,15 @@ class Stm32Dshot {
             return motorCount;
         }
 
-   public:
+        virtual void dmaInit(const uint32_t dshotOutputFreq) = 0;
 
-        void begin(void)
-        {
-            dmaInit(1000 * m_outputFreq);
-        }
+        virtual void dmaUpdateComplete(void) = 0;
+
+        virtual void dmaUpdateStart(void) = 0;
+
+        virtual void dmaWriteMotor(uint8_t index, uint16_t packet) = 0;
+
+   public:
 
         // interval [0,1]
         void write(const float motorValues[])

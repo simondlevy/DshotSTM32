@@ -25,8 +25,10 @@
 #include <vector>
 
 
-static const uint8_t PIN = PB5;    // F411
-//static const uint8_t PIN = PC6;  // F405 
+// static const uint8_t PIN = PB5;    // F411
+static const uint8_t PIN = PC6;  // F405 
+
+static std::vector<uint8_t> pins = {PIN};
 
 static const uint32_t FREQUENCY = 8000;
 
@@ -81,9 +83,7 @@ void setup(void)
 {
     Serial.begin(115200);
 
-    dshot.begin();
-
-    dshot.addMotorStream1(PIN);
+    dshot.begin(pins);
 }
 
 void loop(void)
