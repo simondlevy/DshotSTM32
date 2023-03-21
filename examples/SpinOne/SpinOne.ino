@@ -19,8 +19,7 @@
    DshotSTM32. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <dshot.h>
-#include <stm32/stm32f4.h>
+#include <dshot_stm32f4.h>
 
 #include <vector>
 
