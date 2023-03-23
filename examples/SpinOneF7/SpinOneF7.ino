@@ -23,21 +23,20 @@
 
 #include <vector>
 
-static std::vector<uint8_t> stream1MotorPins = {PC9};
+static std::vector<uint8_t> stream1MotorPins = {PC8};
+static std::vector<uint8_t> stream2MotorPins = {PC9};
+
+static const uint8_t PIN = PC9;
+
+static std::vector<uint8_t> pins = {PIN};
 
 static const uint32_t FREQUENCY = 8000;
 
 static Stm32F7Dshot dshot;
 
-
 extern "C" void DMA2_Stream1_IRQHandler(void) 
 {
     dshot.handleDmaIrqStream1();
-}
-
-extern "C" void DMA2_Stream2_IRQHandler(void) 
-{
-    dshot.handleDmaIrqStream2();
 }
 
 static float motorval = 0.1;
@@ -56,7 +55,7 @@ static void run(const uint32_t usec)
 
     if (usec-prev > 1000000/FREQUENCY) {
         prev = usec;
-        float motorvals[1] = {motorval};
+        float motorvals[2] = {motorval, motorval};
         dshot.write(motorvals);
     }
 }
@@ -79,7 +78,7 @@ void setup(void)
 {
     Serial.begin(115200);
 
-    dshot.begin(stream1MotorPins);
+    dshot.begin(pins);
 }
 
 void loop(void)
