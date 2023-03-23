@@ -23,7 +23,6 @@
 
 #include <vector>
 
-
 // static const uint8_t PIN = PB5;    // F411
 static const uint8_t PIN = PC6;  // F405 
 
