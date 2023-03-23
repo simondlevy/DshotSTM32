@@ -55,8 +55,7 @@ static void run(const uint32_t usec)
 
     if (usec-prev > 1000000/FREQUENCY) {
         prev = usec;
-        float motorvals[2] = {motorval, motorval};
-        dshot.write(motorvals);
+        dshot.write(&motorval);
     }
 }
 
